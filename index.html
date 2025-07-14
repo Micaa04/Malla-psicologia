@@ -1,103 +1,135 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla Curricular Interactiva - Psicología UCO</title>
+  <title>Malla Psicología UCO</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
-      background: #f0f8ff;
+      background: #f8fcff;
       margin: 0;
-      padding: 0;
     }
     h1 {
       text-align: center;
-      color: #004080;
-      margin-top: 20px;
+      color: #003366;
     }
     svg {
       width: 100%;
-      height: 90vh;
-      background: #e6f2ff;
+      height: 100vh;
     }
     .link {
-      stroke: #b3d1ff;
-      stroke-opacity: 0.7;
+      stroke: #90c3e0;
       stroke-width: 2px;
     }
-    .node circle {
-      fill: #66b3ff;
-      stroke: #004080;
+    .node rect {
+      fill: #cce6ff;
+      stroke: #005580;
       stroke-width: 1.5px;
+      rx: 6;
+      ry: 6;
     }
     .node text {
-      font-size: 11px;
+      font-size: 12px;
       fill: #003366;
+      text-anchor: middle;
       pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <h1>Malla Curricular Interactiva - Psicología UCO</h1>
+  <h1>Malla Visual por Semestres - Psicología UCO</h1>
   <svg></svg>
   <script>
-    const nodes = [{"id": "Fundamentos de la Psicología"}, {"id": "Inicio a la formación en Psicología"}, {"id": "Neurobiología de la Mente"}, {"id": "Herramientas para el trabajo intelectual"}, {"id": "Psicología del desarrollo"}, {"id": "Teorías Psicológicas"}, {"id": "Entrevista Psicológica"}, {"id": "Epistemología"}, {"id": "Procesos Cognitivos"}, {"id": "Art. de saberes I"}, {"id": "Metodología General de la investigación"}, {"id": "Psicología, Sujeto y Aprendizaje"}, {"id": "Art. de saberes II"}, {"id": "Métodos y Técnicas cuantitativa/cualitativa"}, {"id": "Clínica I: Fundamentos psicoanalíticos"}, {"id": "Psicología Social"}, {"id": "Herramientas de la Psicología Clínica"}, {"id": "Herramientas de la Psicología Social"}, {"id": "Art. de saberes III"}, {"id": "Ética y deontología"}, {"id": "Clínica II"}, {"id": "Dispositivos Psicoterapéuticos"}, {"id": "Art. de saberes IV"}, {"id": "Neuropsicología"}, {"id": "Psicopatología de adultos"}, {"id": "Psicología y Salud"}, {"id": "Art. de saberes V"}, {"id": "Psicopatología infancia y adolescencia"}, {"id": "Psicología y Educación"}, {"id": "Problemáticas contemporáneas de la Psic. Social"}, {"id": "Art. de saberes VI"}, {"id": "Construcción de itinerario"}, {"id": "Diseño de proyectos"}, {"id": "Proyectos"}, {"id": "Prácticas Integral"}, {"id": "Prácticas Graduación"}, {"id": "Trabajo Final"}];
-    const links = [{"source": "Fundamentos de la Psicología", "target": "Psicología del desarrollo"}, {"source": "Fundamentos de la Psicología", "target": "Teorías Psicológicas"}, {"source": "Neurobiología de la Mente", "target": "Procesos Cognitivos"}, {"source": "Herramientas para el trabajo intelectual", "target": "Metodología General de la investigación"}, {"source": "Epistemología", "target": "Metodología General de la investigación"}, {"source": "Procesos Cognitivos", "target": "Psicología, Sujeto y Aprendizaje"}, {"source": "Art. de saberes I", "target": "Art. de saberes II"}, {"source": "Art. de saberes II", "target": "Art. de saberes III"}, {"source": "Psicología del desarrollo", "target": "Clínica I: Fundamentos psicoanalíticos"}, {"source": "Psicología Social", "target": "Art. de saberes V"}, {"source": "Clínica I: Fundamentos psicoanalíticos", "target": "Clínica II"}, {"source": "Clínica II", "target": "Dispositivos Psicoterapéuticos"}, {"source": "Art. de saberes III", "target": "Art. de saberes IV"}, {"source": "Art. de saberes IV", "target": "Art. de saberes V"}, {"source": "Art. de saberes V", "target": "Art. de saberes VI"}, {"source": "Art. de saberes VI", "target": "Construcción de itinerario"}, {"source": "Construcción de itinerario", "target": "Diseño de proyectos"}, {"source": "Diseño de proyectos", "target": "Proyectos"}, {"source": "Prácticas Integral", "target": "Prácticas Graduación"}, {"source": "Prácticas Graduación", "target": "Trabajo Final"}];
+    const nodes = [
+      {id: "Fundamentos de la Psicología", x:100, y:60},
+      {id: "Inicio a la formación en Psicología", x:100, y:180},
+      {id: "Neurobiología de la Mente", x:100, y:300},
+      {id: "Herramientas para el trabajo intelectual", x:100, y:420},
+      {id: "Psicología del desarrollo", x:300, y:60},
+      {id: "Teorías Psicológicas", x:300, y:180},
+      {id: "Entrevista Psicológica", x:300, y:300},
+      {id: "Epistemología", x:300, y:420},
+      {id: "Procesos Cognitivos", x:500, y:60},
+      {id: "Art. de saberes I", x:500, y:180},
+      {id: "Metodología General de la investigación", x:500, y:300},
+      {id: "Psicología, Sujeto y Aprendizaje", x:700, y:60},
+      {id: "Art. de saberes II", x:700, y:180},
+      {id: "Métodos y Técnicas cuantitativa/cualitativa", x:700, y:300},
+      {id: "Clínica I: Fundamentos psicoanalíticos", x:900, y:60},
+      {id: "Psicología Social", x:900, y:180},
+      {id: "Herramientas de la Psicología Clínica", x:900, y:300},
+      {id: "Herramientas de la Psicología Social", x:900, y:420},
+      {id: "Art. de saberes III", x:900, y:540},
+      {id: "Ética y deontología", x:1100, y:60},
+      {id: "Clínica II", x:1100, y:180},
+      {id: "Dispositivos Psicoterapéuticos", x:1100, y:300},
+      {id: "Art. de saberes IV", x:1100, y:420},
+      {id: "Neuropsicología", x:1300, y:60},
+      {id: "Psicopatología de adultos", x:1300, y:180},
+      {id: "Psicología y Salud", x:1300, y:300},
+      {id: "Art. de saberes V", x:1300, y:420},
+      {id: "Psicopatología infancia y adolescencia", x:1500, y:60},
+      {id: "Psicología y Educación", x:1500, y:180},
+      {id: "Problemáticas contemporáneas de la Psic. Social", x:1500, y:300},
+      {id: "Art. de saberes VI", x:1500, y:420},
+      {id: "Construcción de itinerario", x:1500, y:540},
+      {id: "Diseño de proyectos", x:1700, y:60},
+      {id: "Proyectos", x:1700, y:180},
+      {id: "Prácticas Integral", x:1700, y:300},
+      {id: "Prácticas Graduación", x:1700, y:420},
+      {id: "Trabajo Final", x:1700, y:540}
+    ];
 
-    const svg = d3.select("svg"),
-      width = window.innerWidth,
-      height = window.innerHeight;
+    const links = [
+      ["Fundamentos de la Psicología", "Psicología del desarrollo"],
+      ["Fundamentos de la Psicología", "Teorías Psicológicas"],
+      ["Neurobiología de la Mente", "Procesos Cognitivos"],
+      ["Herramientas para el trabajo intelectual", "Metodología General de la investigación"],
+      ["Epistemología", "Metodología General de la investigación"],
+      ["Procesos Cognitivos", "Psicología, Sujeto y Aprendizaje"],
+      ["Art. de saberes I", "Art. de saberes II"],
+      ["Art. de saberes II", "Art. de saberes III"],
+      ["Psicología del desarrollo", "Clínica I: Fundamentos psicoanalíticos"],
+      ["Psicología Social", "Art. de saberes V"],
+      ["Clínica I: Fundamentos psicoanalíticos", "Clínica II"],
+      ["Clínica II", "Dispositivos Psicoterapéuticos"],
+      ["Art. de saberes III", "Art. de saberes IV"],
+      ["Art. de saberes IV", "Art. de saberes V"],
+      ["Art. de saberes V", "Art. de saberes VI"],
+      ["Art. de saberes VI", "Construcción de itinerario"],
+      ["Construcción de itinerario", "Diseño de proyectos"],
+      ["Diseño de proyectos", "Proyectos"],
+      ["Prácticas Integral", "Prácticas Graduación"],
+      ["Prácticas Graduación", "Trabajo Final"]
+    ].map(([s, t]) => ({source: s, target: t}));
 
-    const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.id).distance(140))
-      .force("charge", d3.forceManyBody().strength(-400))
-      .force("center", d3.forceCenter(width / 2, height / 2));
+    const svg = d3.select("svg");
 
-    const link = svg.append("g")
-        .selectAll("line")
-        .data(links)
-        .join("line")
-        .attr("class", "link");
+    svg.selectAll("line")
+      .data(links)
+      .join("line")
+      .attr("class", "link")
+      .attr("x1", d => nodes.find(n => n.id === d.source).x)
+      .attr("y1", d => nodes.find(n => n.id === d.source).y)
+      .attr("x2", d => nodes.find(n => n.id === d.target).x)
+      .attr("y2", d => nodes.find(n => n.id === d.target).y);
 
-    const node = svg.append("g")
-        .selectAll("g")
-        .data(nodes)
-        .join("g")
-        .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
+    const node = svg.selectAll("g")
+      .data(nodes)
+      .join("g")
+      .attr("class", "node")
+      .attr("transform", d => `translate(${d.x},${d.y})`);
 
-    node.append("circle").attr("r", 20);
+    node.append("rect")
+      .attr("x", -75)
+      .attr("y", -15)
+      .attr("width", 150)
+      .attr("height", 30);
 
     node.append("text")
-        .attr("dy", 4)
-        .attr("x", 24)
-        .text(d => d.id);
-
-    simulation.on("tick", () => {
-      link
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
-      node
-          .attr("transform", d => `translate(${d.x},${d.y})`);
-    });
-
-    function dragstarted(event, d) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x; d.fy = d.y;
-    }
-    function dragged(event, d) {
-      d.fx = event.x; d.fy = event.y;
-    }
-    function dragended(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null; d.fy = null;
-    }
+      .attr("dy", 4)
+      .text(d => d.id);
   </script>
 </body>
 </html>
