@@ -1,6 +1,0 @@
-# Archivos comunes a ignorar
-.DS_Store
-node_modules/
-dist/
-*.log
-.env
