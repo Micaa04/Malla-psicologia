@@ -1,70 +1,149 @@
-const materias = [
-  { nombre: "Inicio a la Formación en Psicología", semestre: 1, id: "inicio" },
-  { nombre: "Historia de la Psicología", semestre: 1, id: "historia" },
-  { nombre: "Fundamentos de la Psicología", semestre: 1, id: "fundamentos" },
-  { nombre: "Neurobiología de la Mente", semestre: 1, id: "neurobio" },
-  { nombre: "Articulación de Saberes I", semestre: 1, id: "art1" },
-  { nombre: "Epistemología", semestre: 1, id: "epist" },
-  { nombre: "Herramientas para el Trabajo Intelectual", semestre: 1, id: "herr_int" },
-
-  { nombre: "Psicología del desarrollo", semestre: 2, id: "desarrollo", req: ["fundamentos"] },
-  { nombre: "Procesos Cognitivos", semestre: 2, id: "cognitivos", req: ["neurobio"] },
-  { nombre: "Metodologías orientadas a la Extensión", semestre: 2, id: "extension" },
-  { nombre: "Metodología General de la Investigación", semestre: 2, id: "met_gen", req: ["epist"] },
-  { nombre: "Entrevista Psicológica", semestre: 2, id: "entrevista", req: ["inicio"] },
-  { nombre: "Articulación de Saberes II", semestre: 2, id: "art2" },
-  { nombre: "Referencial II: Formación integral", semestre: 2, id: "referencial2" },
-
-  { nombre: "Psicología Social", semestre: 3, id: "social" },
-  { nombre: "Psicología Sujeto y Aprendizaje", semestre: 3, id: "sujeto" },
-  { nombre: "Ética y Deontología", semestre: 3, id: "etica" },
-  { nombre: "Métodos y Técnicas Cualitativas", semestre: 3, id: "mtc" },
-  { nombre: "Articulación de Saberes III", semestre: 3, id: "art3" }
+const materiasPorSemestre = [
+  {
+    nombre: "1er semestre",
+    materias: [
+      "Inicio a la Formación en Psicología",
+      "Historia de la Psicología",
+      "Fundamentos de la Psicología",
+      "Neurobiología de la Mente",
+      "Articulación de Saberes I",
+      "Epistemología",
+      "Herramientas para el Trabajo Intelectual"
+    ]
+  },
+  {
+    nombre: "2do semestre",
+    materias: [
+      "Psicología del Desarrollo",
+      "Procesos Cognitivos",
+      "Metodologías y Herramientas orientadas a la Extensión",
+      "Metodología General de la Investigación",
+      "Entrevista Psicológica",
+      "Articulación de Saberes II",
+      "Referencial II: Formación Integral"
+    ]
+  },
+  {
+    nombre: "3er semestre",
+    materias: [
+      "Psicología Social",
+      "Psicología Sujeto y Aprendizaje",
+      "Ética y Deontología",
+      "Métodos y Técnicas Cualitativas",
+      "Articulación de Saberes III"
+    ]
+  },
+  {
+    nombre: "4to semestre",
+    materias: [
+      "Clínica I: Fundamentos Psicoanalíticos",
+      "Psicología y Salud",
+      "Herramientas de la Psicología Clínica",
+      "Técnicas Cuantitativas",
+      "Herramientas de la Psicología Social",
+      "Diseño de Proyectos",
+      "Articulación de Saberes IV"
+    ]
+  },
+  {
+    nombre: "5to semestre",
+    materias: [
+      "Psicopatología de niños y adolescentes",
+      "Psicopatología de adultos",
+      "Neuropsicología",
+      "Clínica II: Teorías y Técnicas de las Intervenciones",
+      "Articulación de Saberes V",
+      "Construcción de Itinerario",
+      "Proyectos",
+      "Práctica de Ciclo de Formación Integral"
+    ]
+  },
+  {
+    nombre: "6to semestre",
+    materias: [
+      "Problemáticas contemporáneas de la Psicología Social",
+      "Psicología y Educación",
+      "Dispositivos Psicoterapéuticos",
+      "Articulación de Saberes VI"
+    ]
+  },
+  {
+    nombre: "7mo y 8vo semestre",
+    materias: [
+      "Referencial de Egreso",
+      "Optativas del Ciclo de Graduación",
+      "Práctica de Graduación",
+      "Idiomas",
+      "Tutoría",
+      "Defensa"
+    ]
+  }
 ];
 
-function render() {
-  const container = document.getElementById("malla-container");
-  container.innerHTML = "";
-  const completed = JSON.parse(localStorage.getItem("materias_aprobadas") || "[]");
+const previaturas = {
+  "Clínica I: Fundamentos Psicoanalíticos": ["Articulación de Saberes II", "Teorías Psicológicas", "Fundamentos de la Psicología", "Ética y Deontología", "Epistemología"],
+  "Psicología y Salud": ["Psicología del Desarrollo", "Fundamentos de la Psicología", "Articulación de Saberes II"],
+  "Herramientas de la Psicología Clínica": ["Entrevista Psicológica", "Inicio a la Formación en Psicología", "Articulación de Saberes III", "Teorías Psicológicas", "Fundamentos de la Psicología"],
+  "Técnicas Cuantitativas": ["Herramientas para el Trabajo Intelectual", "Metodología General de la Investigación", "Epistemología"],
+  "Herramientas de la Psicología Social": ["Psicología Social", "Teorías Psicológicas", "Fundamentos de la Psicología", "Articulación de Saberes I"],
+  "Diseño de Proyectos": ["Metodología General de la Investigación", "Epistemología", "Métodos y Técnicas Cualitativas", "Herramientas para el Trabajo Intelectual"],
+  "Articulación de Saberes IV": ["Psicología Social", "Articulación de Saberes I", "Teorías Psicológicas", "Fundamentos de la Psicología", "Articulación de Saberes II"],
+  "Psicopatología de niños y adolescentes": ["Entrevista Psicológica", "Inicio a la Formación en Psicología", "Clínica I: Fundamentos Psicoanalíticos"],
+  "Psicopatología de adultos": ["Entrevista Psicológica", "Inicio a la Formación en Psicología", "Clínica I: Fundamentos Psicoanalíticos"],
+  "Neuropsicología": ["Procesos Cognitivos", "Neurobiología de la Mente"],
+  "Clínica II: Teorías y Técnicas de las Intervenciones": ["Herramientas de la Psicología Clínica", "Clínica I: Fundamentos Psicoanalíticos"],
+  "Articulación de Saberes V": ["Herramientas de la Psicología Social", "Articulación de Saberes IV"],
+  "Construcción de Itinerario": ["Psicología Social", "Articulación de Saberes I", "Teorías Psicológicas", "Fundamentos de la Psicología", "Psicología Sujeto y Aprendizaje", "Procesos Cognitivos", "Neurobiología de la Mente", "Psicología del Desarrollo", "Clínica I: Fundamentos Psicoanalíticos"],
+  "Proyectos": ["Ciclo Inicial completo", "Diseño de Proyectos"],
+  "Práctica de Ciclo de Formación Integral": ["Ciclo Inicial completo", "Ética y Deontología", "Psicología y Salud", "Psicología Sujeto y Aprendizaje", "Clínica I: Fundamentos Psicoanalíticos", "Herramientas de la Psicología Clínica", "Herramientas de la Psicología Social"],
+  "Problemáticas contemporáneas de la Psicología Social": ["Psicología Social", "Articulación de Saberes V"],
+  "Psicología y Educación": ["Psicología Sujeto y Aprendizaje", "Procesos Cognitivos", "Neurobiología de la Mente", "Psicología del Desarrollo", "Fundamentos de la Psicología"],
+  "Dispositivos Psicoterapéuticos": ["Clínica II: Teorías y Técnicas de las Intervenciones"],
+  "Articulación de Saberes VI": ["Articulación de Saberes I", "Articulación de Saberes II", "Articulación de Saberes III", "Teorías Psicológicas", "Fundamentos de la Psicología"],
+  "Referencial de Egreso": ["Ciclo Inicial completo", "Ciclo de Formación Integral completo", "Práctica de Ciclo de Formación Integral", "Proyectos"],
+  "Optativas del Ciclo de Graduación": ["Ciclo Inicial completo", "Ética y Deontología", "Psicología Sujeto y Aprendizaje", "Psicología y Salud", "Clínica I: Fundamentos Psicoanalíticos", "Herramientas de la Psicología Clínica", "Herramientas de la Psicología Social"],
+  "Práctica de Graduación": ["Práctica de Ciclo de Formación Integral"],
+  "Tutoría": ["Ciclo Inicial completo", "Ciclo Integral completo", "Prácticas y Proyectos"],
+  "Defensa": ["Toda la malla curricular acreditada"]
+};
 
-  for (let semestre = 1; semestre <= 3; semestre++) {
-    const semestreDiv = document.createElement("div");
-    semestreDiv.className = "semestre";
-    semestreDiv.innerHTML = `<h2>Semestre ${semestre}</h2>`;
+const container = document.getElementById("malla-container");
+const completadas = new Set(JSON.parse(localStorage.getItem("completadas") || "[]"));
 
-    materias
-      .filter(m => m.semestre === semestre)
-      .forEach(m => {
-        const isUnlocked = !m.req || m.req.every(r => completed.includes(r));
-        const isCompleted = completed.includes(m.id);
-
-        const materiaDiv = document.createElement("div");
-        materiaDiv.className = "materia";
-        if (!isUnlocked) materiaDiv.classList.add("bloqueada");
-        if (isCompleted) materiaDiv.classList.add("aprobada");
-
-        materiaDiv.innerHTML = `
-          <label>
-            <input type="checkbox" ${isCompleted ? "checked" : ""} ${!isUnlocked ? "disabled" : ""} onchange="toggleMateria('${m.id}')">
-            ${m.nombre}
-          </label>
-        `;
-        semestreDiv.appendChild(materiaDiv);
-      });
-
-    container.appendChild(semestreDiv);
-  }
+function guardarEstado() {
+  localStorage.setItem("completadas", JSON.stringify(Array.from(completadas)));
 }
 
-function toggleMateria(id) {
-  let aprobadas = JSON.parse(localStorage.getItem("materias_aprobadas") || "[]");
-  if (aprobadas.includes(id)) {
-    aprobadas = aprobadas.filter(x => x !== id);
-  } else {
-    aprobadas.push(id);
-  }
-  localStorage.setItem("materias_aprobadas", JSON.stringify(aprobadas));
-  render();
+function crearMateria(nombre) {
+  const div = document.createElement("div");
+  div.className = "materia";
+  div.textContent = nombre;
+
+  if (completadas.has(nombre)) div.classList.add("completed");
+
+  const deps = previaturas[nombre];
+  const locked = deps && !deps.every(dep => completadas.has(dep));
+
+  if (locked) div.classList.add("locked");
+
+  div.addEventListener("click", () => {
+    if (locked) return;
+    if (completadas.has(nombre)) completadas.delete(nombre);
+    else completadas.add(nombre);
+    guardarEstado();
+    location.reload();
+  });
+
+  return div;
 }
 
-window.onload = render;
+materiasPorSemestre.forEach(semestre => {
+  const col = document.createElement("div");
+  col.className = "semestre";
+  const title = document.createElement("h2");
+  title.textContent = semestre.nombre;
+  col.appendChild(title);
+  semestre.materias.forEach(materia => col.appendChild(crearMateria(materia)));
+  container.appendChild(col);
+});
+
