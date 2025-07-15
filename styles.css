@@ -1,0 +1,36 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  background-color: #f8f8f8;
+  color: #333;
+}
+h1 {
+  text-align: center;
+}
+#malla-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.materia {
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  position: relative;
+}
+.materia:hover .detalle {
+  display: block;
+}
+.detalle {
+  display: none;
+  background: #eef;
+  border-radius: 6px;
+  padding: 0.5rem;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+}
